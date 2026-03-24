@@ -36,9 +36,25 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  // NEXTAUTH_SECRET must be set in Vercel env vars
+  // To switch domain: update NEXTAUTH_URL in Vercel to https://cardgenius.me
+  secret: process.env.NEXTAUTH_SECRET,
+
   pages: {
-    signIn: '/auth/signin'
+    signIn: '/auth/signin',
+    error: '/auth/signin', // redirect auth errors back to signin with ?error= param
   },
+
+  cookies:
+    process.env.NODE_ENV === 'production'
+      ? {
+          sessionToken: {
+            name: `__Secure-next-auth.session-token`,
+            options: { httpOnly: true, sameSite: 'lax', path: '/', secure: true },
+          },
+        }
+      : undefined,
+
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -48,11 +64,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      // Google OAuth callback URL (set this in Google Cloud Console):
+      // https://test-cardgenius-eo3j.vercel.app/api/auth/callback/google
+      // When switching domain, add: https://cardgenius.me/api/auth/callback/google
     }),
     /**
      * ...add more providers here.
