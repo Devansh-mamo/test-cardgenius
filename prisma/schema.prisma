@@ -76,12 +76,12 @@ model card {
 }
 
 model User {
-  id             String    @id
+  id             String    @id @default(cuid())
   name           String?
   hashedPassword String?
   image          String?
   createdAt      DateTime  @default(now())
-  updatedAt      DateTime
+  updatedAt      DateTime  @updatedAt
   email          String?   @unique(map: "User_email_key")
   emailVerified  DateTime?
   role           user_role @default(USER)
