@@ -3,13 +3,8 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { MantineProvider } from '@mantine/core';
 import { api } from "~/utils/api";
-
-//global icon import
-// import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core';
-// import { faAt, faPhone, faMapPin, faLink } from '@fortawesome/free-solid-svg-icons'
-// import { faLinkedinIn, faWhatsapp, faFacebook, faYoutube, faTwitter, faGithub, faInstagram} from '@fortawesome/free-brands-svg-icons'
-
-// library.add(faAt, faPhone, faMapPin, faLink, faLinkedinIn, faWhatsapp, faFacebook, faYoutube, faTwitter, faGithub, faInstagram as IconDefinition)
+import Head from "next/head";
+import Script from "next/script";
 
 import "~/styles/globals.css";
   
@@ -20,6 +15,25 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
+        {/* Google Site Verification (GSC) */}
+        <Head>
+          <meta name="google-site-verification" content="IASoVFlYFUZ0mrotRwIZUG-Mvq4SCZUfYguXb1iBUoA" />
+        </Head>
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-91805X9Y1N"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-91805X9Y1N');
+          `}
+        </Script>
+
         <Component {...pageProps} />
       </MantineProvider>
     </SessionProvider>
