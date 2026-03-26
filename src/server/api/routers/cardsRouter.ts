@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 import {
   createTRPCRouter,
@@ -37,23 +38,23 @@ export const cardsRouter = createTRPCRouter({
   createCard: protectedProcedure
     .input(
       z.object({
-        address: z.string(),
-        company: z.string(),
-        email: z.string(),
-        facebook: z.string(),
-        github: z.string(),
-        imgUrl: z.string(),
-        instagram: z.string(),
-        link: z.string(),
-        linkedin: z.string(),
-        logoUrl: z.string(),
-        name: z.string(),
-        phone: z.string(),
-        title: z.string(),
-        twitter: z.string(),
-        websitelink: z.string(),
-        whatsapp: z.string(),
-        youtube: z.string()
+        address: z.string().optional().default(''),
+        company: z.string().optional().default(''),
+        email: z.string().optional().default(''),
+        facebook: z.string().optional().default(''),
+        github: z.string().optional().default(''),
+        imgUrl: z.string().optional().default(''),
+        instagram: z.string().optional().default(''),
+        link: z.string().optional().default(''),
+        linkedin: z.string().optional().default(''),
+        logoUrl: z.string().optional().default(''),
+        name: z.string().min(1, 'Name is required'),
+        phone: z.string().optional().default(''),
+        title: z.string().optional().default(''),
+        twitter: z.string().optional().default(''),
+        websitelink: z.string().optional().default(''),
+        whatsapp: z.string().optional().default(''),
+        youtube: z.string().optional().default('')
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -100,23 +101,23 @@ export const cardsRouter = createTRPCRouter({
     .input(
       z.object({
         cardId: z.string(),
-        address: z.string(),
-        company: z.string(),
-        email: z.string(),
-        facebook: z.string(),
-        github: z.string(),
-        imgUrl: z.string(),
-        instagram: z.string(),
-        link: z.string(),
-        linkedin: z.string(),
-        logoUrl: z.string(),
-        name: z.string(),
-        phone: z.string(),
-        title: z.string(),
-        twitter: z.string(),
-        websitelink: z.string(),
-        whatsapp: z.string(),
-        youtube: z.string()
+        address: z.string().optional().default(''),
+        company: z.string().optional().default(''),
+        email: z.string().optional().default(''),
+        facebook: z.string().optional().default(''),
+        github: z.string().optional().default(''),
+        imgUrl: z.string().optional().default(''),
+        instagram: z.string().optional().default(''),
+        link: z.string().optional().default(''),
+        linkedin: z.string().optional().default(''),
+        logoUrl: z.string().optional().default(''),
+        name: z.string().min(1, 'Name is required'),
+        phone: z.string().optional().default(''),
+        title: z.string().optional().default(''),
+        twitter: z.string().optional().default(''),
+        websitelink: z.string().optional().default(''),
+        whatsapp: z.string().optional().default(''),
+        youtube: z.string().optional().default('')
       }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session?.user.id
