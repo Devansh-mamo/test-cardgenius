@@ -65,7 +65,7 @@ const Feature: NextPage = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-900 mb-4">
-            Our Product Features
+            Our Features
           </h2>
           <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto font-normal">
             Everything you need to create and manage your professional digital identity in one platform.
