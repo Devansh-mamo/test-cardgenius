@@ -11,12 +11,7 @@ const server = z.object({
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
-  NEXTAUTH_URL: z.preprocess(
-    // On Vercel, VERCEL_URL is available but without https://, so we add it
-    // For custom domain (cardgenius.me), set NEXTAUTH_URL explicitly in Vercel env vars
-    (str) => process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : str,
-    process.env.VERCEL ? z.string().min(1) : z.string().url(),
-  ),
+  NEXTAUTH_URL: z.string().url(),
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
